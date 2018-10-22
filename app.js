@@ -1,8 +1,16 @@
 'use strict'
+//declare object to store all data retrieved by API calls
+const STATE = {
+  venueSearch: null,
+  venueDetails: null,
+  venuePhotos: null
+};
 
+//declare constants required API URL endpoints
 const venueSearchEndpoint = 'https://api.foursquare.com/v2/venues/search';
 
-function getVenueSearchDataFromApi(searchTerm, callback) {
+//make call to retreive venue search data & update STATE object
+function getVenueSearchDataFromApi(searchTerm) {
     const settings = {
       url: venueSearchEndpoint,
       data: {
@@ -16,11 +24,17 @@ function getVenueSearchDataFromApi(searchTerm, callback) {
       },
       dataType: 'json',
       type: 'GET',
-      success: callback
     };
-    $.ajax(settings);
+
+    $.ajax(settings).then((results) => {
+      STATE.venueSearch = results.response;
+      displayVenueSearchData();
+    });
+    //test to see what current value of STATE is
+    console.log(STATE); 
   }
 
+  //render HTML template for each venue search result
   function renderVenueSearchResults(result) {
       const venueName = result.name;
       const addressArray = result.location.formattedAddress;
@@ -35,12 +49,15 @@ function getVenueSearchDataFromApi(searchTerm, callback) {
       `
   }
 
-  function displayVenueSearchData(data) {
-      const results = data.response.venues.map((item) => renderVenueSearchResults(item));
+  //pass each venue search result through the HTML rendering function & make results section displayable
+  function displayVenueSearchData() {
+      const results = STATE.venueSearch.venues.map((item) => renderVenueSearchResults(item));
       $('.js-results').html(results);
       $('.js-results').prop('hidden', false);
   }
 
+  //listen for user input & submit
+  //run venue search API call
   function submitVenueSearch() {
     $('.js-search-form').on('submit', function(event) {
       event.preventDefault();
@@ -49,9 +66,10 @@ function getVenueSearchDataFromApi(searchTerm, callback) {
         $('.js-results').html('Please enter a search term');
       } else {
         $('.js-input').val("");
-        getVenueSearchDataFromApi(userInput, displayVenueSearchData);
+        getVenueSearchDataFromApi(userInput);
       }
     });
   }
 
+//document ready function
   $(submitVenueSearch);
