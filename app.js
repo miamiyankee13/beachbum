@@ -33,7 +33,7 @@ function getVenueSearchDataFromApi(searchTerm) {  //retreive venue search data/u
   $.ajax(settings).then((results) => {        //api call
     STATE.venueSearch = results.response;     //store results in STATE object
     displayVenueSearchData();
-  });
+  }).catch(showError);
 
   counter = 0;          //reset counter
   console.log(STATE);   //test to see what current value of STATE is
@@ -57,7 +57,7 @@ function getVenuePhotosFromApi(venueId, name, address) { //retreive venue photo 
   $.ajax(settings).then((results) => {      //API call
     STATE.venuePhotos = results.response;   //store results in STATE object
     displayVenuePhotos(name, address);     //call function - pass in name & address parameters from API call
-  });
+  }).catch(showError);
 }
 
 function displayVenueSearchData() {       //pass results through the HTML rendering function
@@ -107,6 +107,7 @@ function submitVenueSearch() {              //listen for user submit
     } else {
       $('.js-input').val("");
       getVenueSearchDataFromApi(userInput);   //run API call - pass in user input
+      $('.js-error').prop('hidden', true);
     }
   });
 }
@@ -120,7 +121,7 @@ function submitVenue1DetailsButton() {       //listen for user click
     getVenuePhotosFromApi(venueId, name, address);  //run API call - pass in id, name, address
     $('.js-header').prop('hidden', true);
     $('.js-search-form').prop('hidden', true);
-
+    $('.js-error').prop('hidden', true);
     console.log(STATE);      //test to see what current value of STATE is
   });
 }
@@ -134,7 +135,7 @@ function submitVenue2DetailsButton() {        //listen for user click
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
     $('.js-header').prop('hidden', true);
     $('.js-search-form').prop('hidden', true);
-
+    $('.js-error').prop('hidden', true);
     console.log(STATE);     //test to see what current value of STATE is
   });
 }
@@ -148,7 +149,7 @@ function submitVenue3DetailsButton() {    //listen for user click
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
     $('.js-header').prop('hidden', true);
     $('.js-search-form').prop('hidden', true);
-
+    $('.js-error').prop('hidden', true);
     console.log(STATE);    //test to see what current value of STATE is
   });
 }
@@ -162,7 +163,7 @@ function submitVenue4DetailsButton() {      //listen for user click
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
     $('.js-header').prop('hidden', true);
     $('.js-search-form').prop('hidden', true);
-
+    $('.js-error').prop('hidden', true);
     console.log(STATE);    //test to see what current value of STATE is
   });
 }
@@ -176,7 +177,7 @@ function submitVenue5DetailsButton() {    //listen for user click
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
     $('.js-header').prop('hidden', true);
     $('.js-search-form').prop('hidden', true);
-
+    $('.js-error').prop('hidden', true);
     console.log(STATE);     //test to see what current value of STATE is
   });
 }
@@ -190,7 +191,7 @@ function submitVenue6DetailsButton() {   //listen for user click
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
     $('.js-header').prop('hidden', true);
     $('.js-search-form').prop('hidden', true);
-
+    $('.js-error').prop('hidden', true);
     console.log(STATE);    //test to see what current value of STATE is
   });
 }
@@ -204,7 +205,7 @@ function submitVenue7DetailsButton() {   //listen for user click
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
     $('.js-header').prop('hidden', true);
     $('.js-search-form').prop('hidden', true);
-
+    $('.js-error').prop('hidden', true);
     console.log(STATE);     //test to see what current value of STATE is
   });
 }
@@ -218,7 +219,7 @@ function submitVenue8DetailsButton() {    //listen for user click
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
     $('.js-header').prop('hidden', true);
     $('.js-search-form').prop('hidden', true);
-
+    $('.js-error').prop('hidden', true);
     console.log(STATE);      //test to see what current value of STATE is
   });
 }
@@ -232,7 +233,7 @@ function submitVenue9DetailsButton() {    //listen for user click
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
     $('.js-header').prop('hidden', true);
     $('.js-search-form').prop('hidden', true);
-
+    $('.js-error').prop('hidden', true);
     console.log(STATE);     //test to see what current value of STATE is
   });
 }
@@ -246,7 +247,7 @@ function submitVenue10DetailsButton() {   //listen for user click
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
     $('.js-header').prop('hidden', true);
     $('.js-search-form').prop('hidden', true);
-      
+    $('.js-error').prop('hidden', true);
     console.log(STATE);   //test to see what current value of STATE is
   });
 }
@@ -257,7 +258,13 @@ function submitBackButton() {        //listen for user click
     getVenueSearchDataFromApi(STATE.query);  //run API call - pass in query from STATE object
     $('.js-header').prop('hidden', false);
     $('.js-search-form').prop('hidden', false);
+    $('.js-error').prop('hidden', true);
   })
+}
+
+function showError() {    //display error
+  $('.js-error').prop('hidden', false);
+  $('.js-error').html('There was an error loading the required data. Please check your internet connection')
 }
 
 function handleBeachBum() {   //document ready functions
