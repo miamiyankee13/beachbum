@@ -1,5 +1,8 @@
 'use strict'
 
+$('.js-header').prop('hidden', false);
+$('.js-search-form').prop('hidden', false);
+
 const STATE = {           //declare object to store data retrieved by API calls
   venueSearch: null,
   venuePhotos: null,
@@ -64,7 +67,7 @@ function displayVenueSearchData() {       //pass results through the HTML render
 }
 
 function displayVenuePhotos(name, address) {    //pass results through the HTML rendering function
-  const photos = STATE.venuePhotos.photos.items.map((item) => renderVenuePhotos(item));
+  const photos = STATE.venuePhotos.photos.items.map((item) => renderVenuePhotos(item)).join('');
   $('.js-results').html(`<h2>${name}</h2><h3>${address}</h3>${photos}
   <div><button class="js-back-btn">Back to results</button></div>`);    //display data in HTML section
 }
@@ -115,6 +118,8 @@ function submitVenue1DetailsButton() {       //listen for user click
     const name = STATE.venueSearch.venues[0].name;
     const address = STATE.venueSearch.venues[0].location.formattedAddress.join(', ');
     getVenuePhotosFromApi(venueId, name, address);  //run API call - pass in id, name, address
+    $('.js-header').prop('hidden', true);
+    $('.js-search-form').prop('hidden', true);
 
     console.log(STATE);      //test to see what current value of STATE is
   });
@@ -127,6 +132,8 @@ function submitVenue2DetailsButton() {        //listen for user click
     const name = STATE.venueSearch.venues[1].name;
     const address = STATE.venueSearch.venues[1].location.formattedAddress.join(', ');
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
+    $('.js-header').prop('hidden', true);
+    $('.js-search-form').prop('hidden', true);
 
     console.log(STATE);     //test to see what current value of STATE is
   });
@@ -139,6 +146,8 @@ function submitVenue3DetailsButton() {    //listen for user click
     const name = STATE.venueSearch.venues[2].name;
     const address = STATE.venueSearch.venues[2].location.formattedAddress.join(', ');
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
+    $('.js-header').prop('hidden', true);
+    $('.js-search-form').prop('hidden', true);
 
     console.log(STATE);    //test to see what current value of STATE is
   });
@@ -151,6 +160,8 @@ function submitVenue4DetailsButton() {      //listen for user click
     const name = STATE.venueSearch.venues[3].name;
     const address = STATE.venueSearch.venues[3].location.formattedAddress.join(', ');
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
+    $('.js-header').prop('hidden', true);
+    $('.js-search-form').prop('hidden', true);
 
     console.log(STATE);    //test to see what current value of STATE is
   });
@@ -163,6 +174,8 @@ function submitVenue5DetailsButton() {    //listen for user click
     const name = STATE.venueSearch.venues[4].name;
     const address = STATE.venueSearch.venues[4].location.formattedAddress.join(', ');
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
+    $('.js-header').prop('hidden', true);
+    $('.js-search-form').prop('hidden', true);
 
     console.log(STATE);     //test to see what current value of STATE is
   });
@@ -175,6 +188,8 @@ function submitVenue6DetailsButton() {   //listen for user click
     const name = STATE.venueSearch.venues[5].name;
     const address = STATE.venueSearch.venues[5].location.formattedAddress.join(', ');
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
+    $('.js-header').prop('hidden', true);
+    $('.js-search-form').prop('hidden', true);
 
     console.log(STATE);    //test to see what current value of STATE is
   });
@@ -187,6 +202,8 @@ function submitVenue7DetailsButton() {   //listen for user click
     const name = STATE.venueSearch.venues[6].name;
     const address = STATE.venueSearch.venues[6].location.formattedAddress.join(', ');
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
+    $('.js-header').prop('hidden', true);
+    $('.js-search-form').prop('hidden', true);
 
     console.log(STATE);     //test to see what current value of STATE is
   });
@@ -199,6 +216,8 @@ function submitVenue8DetailsButton() {    //listen for user click
     const name = STATE.venueSearch.venues[7].name;
     const address = STATE.venueSearch.venues[7].location.formattedAddress.join(', ');
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
+    $('.js-header').prop('hidden', true);
+    $('.js-search-form').prop('hidden', true);
 
     console.log(STATE);      //test to see what current value of STATE is
   });
@@ -211,6 +230,8 @@ function submitVenue9DetailsButton() {    //listen for user click
     const name = STATE.venueSearch.venues[8].name;
     const address = STATE.venueSearch.venues[8].location.formattedAddress.join(', ');
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
+    $('.js-header').prop('hidden', true);
+    $('.js-search-form').prop('hidden', true);
 
     console.log(STATE);     //test to see what current value of STATE is
   });
@@ -223,6 +244,8 @@ function submitVenue10DetailsButton() {   //listen for user click
     const name = STATE.venueSearch.venues[9].name;
     const address = STATE.venueSearch.venues[9].location.formattedAddress.join(', ');
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
+    $('.js-header').prop('hidden', true);
+    $('.js-search-form').prop('hidden', true);
       
     console.log(STATE);   //test to see what current value of STATE is
   });
@@ -232,6 +255,8 @@ function submitBackButton() {        //listen for user click
   $('body').on('click', '.js-back-btn', function(event) {
     event.preventDefault();
     getVenueSearchDataFromApi(STATE.query);  //run API call - pass in query from STATE object
+    $('.js-header').prop('hidden', false);
+    $('.js-search-form').prop('hidden', false);
   })
 }
 

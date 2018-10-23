@@ -8,14 +8,14 @@
     <link href="main.css" rel="stylesheet" type="text/css">      
   </head>
 <body>
-  <header role="banner">
+  <header role="banner" class="js-header" aria-live="assertive" hidden>
     <h1>BeachBum</h1>
     <p>Looking for nearby beaches? BeachBum has you covered!</p>
     <p>Please enter the postal code for a desired location below:</p>
   </header>
   <main role="main">
     <section role="region">
-        <form class="js-search-form">
+        <form class="js-search-form" aria-live="assertive" hidden>
           <input type="number" class="js-input">
           <button type="submit" class="js-submit">Search</button>
         </form>
