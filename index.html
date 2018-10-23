@@ -8,15 +8,16 @@
     <link href="main.css" rel="stylesheet" type="text/css">      
   </head>
 <body>
-  <header role="banner" class="js-header" aria-live="assertive" hidden>
+  <header role="banner">
     <h1>BeachBum</h1>
-    <p>Looking for nearby beaches? BeachBum has you covered!</p>
-    <p>Please enter the postal code for a desired location below:</p>
   </header>
   <main role="main">
     <section role="region">
         <form class="js-search-form" aria-live="assertive" hidden>
-          <input type="number" class="js-input">
+          <p>Looking for nearby beaches? BeachBum has you covered!</p>
+          <p>Please enter the desired location below</p>
+          <label for="query">Postal code:</label>
+          <input type="text" name="postal-code" id="postal-code" class="js-input">
           <button type="submit" class="js-submit">Search</button>
         </form>
     </section>
