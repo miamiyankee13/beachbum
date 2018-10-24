@@ -5,13 +5,14 @@ $('.js-search-form').prop('hidden', false);  //toggle hidden attribute from HTML
 const STATE = {           //declare object to store data retrieved by API calls
   venueSearch: null,
   venuePhotos: null,
-  query: null,
+  venueWeather: null,
+  postalCode: null,
 };
 
 let counter = 0;        //declare counter for rendering details buttons
 
 function getVenueSearchDataFromApi(searchTerm) {  //retreive venue search data/update STATE object
-  STATE.query = searchTerm;                       //store search term in STATE object
+  STATE.postalCode = searchTerm;                       //store search term in STATE object
   const venueSearchEndpoint = 'https://api.foursquare.com/v2/venues/search'; 
   
   const settings = {                               //parameters for API call
@@ -35,7 +36,6 @@ function getVenueSearchDataFromApi(searchTerm) {  //retreive venue search data/u
     $('.js-search-form').prop('hidden', false);   //toggle hidden attribute from HTML section
     $('.js-message').prop('hidden', true);
   }).catch(showError);
-
 
   counter = 0;          //reset counter
   console.log(STATE);   //test to see what current value of STATE is
@@ -64,22 +64,81 @@ function getVenuePhotosFromApi(venueId, name, address) { //retreive venue photo 
   }).catch(showError);
 }
 
+function getVenueWeatherFromApi(venuePostalCode) {
+  const venueWeatherEndpoint = 'https://api.weatherbit.io/v2.0/forecast/daily';
+
+  const settings = {
+    url: venueWeatherEndpoint,
+    data: {
+      key: '0a4e350d938e4737979ee5d05f620a49',
+      lang: 'en',
+      postal_code: `${venuePostalCode}`,
+      units: 'I',
+      days: 5
+    },
+    dataType: 'json',
+    type: 'GET'
+  };
+
+  $.ajax(settings).then((results) => {
+    STATE.venueWeather = results.data;
+    displayVenueWeatherData();
+  }).catch(showError);
+}
+
 function displayVenueSearchData() {       //pass results through the HTML rendering function
-    const results = STATE.venueSearch.venues.map((item) => renderVenueSearchResults(item));
+    const results = STATE.venueSearch.venues.map((item) => renderVenueSearchData(item));
     $('.js-results').html(results);              //display data in HTML section
     $('.js-results').prop('hidden', false);      //toggle hidden attribute from HTML section
 }
 
 function displayVenuePhotos(name, address) {    //pass results through the HTML rendering function
   const photos = STATE.venuePhotos.photos.items.map((item) => renderVenuePhotos(item)).join('');
-  $('.js-results').html(`<h2>${name}</h2><h3>${address}</h3>${photos}
-  <div><button class="js-back-btn">Back to results</button></div>`);    //display data in HTML section
+  const photosHtml = `
+  <div>
+    <h2>${name}</h2>
+    <h3>${address}</h3>
+    <div>
+      ${photos}
+    </div>
+    <button class="js-back-btn">Back to results</button>
+  </div>`;
+
+  $('.js-results').html(photosHtml);    //display data in HTML section
 }
 
-function renderVenueSearchResults(result) {   //HTML template for each venue search result
+function displayVenueWeatherData() {
+  const weather = STATE.venueWeather.map((item) => renderVenueWeatherData(item)).join('');
+  const weatherHtml = `
+  <div class="weather">
+  ${weather}
+  </div> 
+  `;
+
+  $('.js-back-btn').before(weatherHtml);
+}
+
+function renderVenueWeatherData(day) {
+  const description = day.weather.description;
+  const iconCode = day.weather.icon;
+  const highTemp = day.max_temp;
+  const lowTemp = day.min_temp;
+  const date = day.valid_date;
+  return `
+  <div class="day">
+    <h3>${date}</h3>
+    <img src="images/icons/${iconCode}.png" alt="Weather icon">
+    <p>${description}</p>
+    <p>High temp: ${highTemp} °F</p>
+    <p>Low temp: ${lowTemp} °F</p>
+  </div>
+  `
+}
+
+function renderVenueSearchData(result) {   //HTML template for each venue search result
   const name = result.name;
   const address = result.location.formattedAddress.join(', ');
-  counter++;
+  counter++;                                  //increment counter
   return `
   <div>
     <h2>${name}</h2>
@@ -95,9 +154,7 @@ function renderVenuePhotos(result) {  //HTML template for each venue photo
   const suffix = result.suffix;
   const size = '300x300'
   return `
-  <div>
     <img src="${prefix}${size}${suffix}" alt="Beach photo">
-  </div>
   `
 }
 
@@ -123,10 +180,12 @@ function submitVenue1DetailsButton() {       //listen for user click
     const venueId = STATE.venueSearch.venues[0].id;
     const name = STATE.venueSearch.venues[0].name;
     const address = STATE.venueSearch.venues[0].location.formattedAddress.join(', ');
+    const venuePostalCode = STATE.venueSearch.venues[0].location.postalCode;
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);  //run API call - pass in id, name, address
+    getVenueWeatherFromApi(venuePostalCode);                        //run API call
     console.log(STATE);      //test to see what current value of STATE is
   });
 }
@@ -137,10 +196,12 @@ function submitVenue2DetailsButton() {        //listen for user click
     const venueId = STATE.venueSearch.venues[1].id;
     const name = STATE.venueSearch.venues[1].name;
     const address = STATE.venueSearch.venues[1].location.formattedAddress.join(', ');
+    const venuePostalCode = STATE.venueSearch.venues[1].location.postalCode;
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
+    getVenueWeatherFromApi(venuePostalCode);                        //run API call
     console.log(STATE);     //test to see what current value of STATE is
   });
 }
@@ -151,10 +212,12 @@ function submitVenue3DetailsButton() {    //listen for user click
     const venueId = STATE.venueSearch.venues[2].id;
     const name = STATE.venueSearch.venues[2].name;
     const address = STATE.venueSearch.venues[2].location.formattedAddress.join(', ');
+    const venuePostalCode = STATE.venueSearch.venues[2].location.postalCode;
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
+    getVenueWeatherFromApi(venuePostalCode);                        //run API call
     console.log(STATE);    //test to see what current value of STATE is
   });
 }
@@ -165,10 +228,12 @@ function submitVenue4DetailsButton() {      //listen for user click
     const venueId = STATE.venueSearch.venues[3].id;
     const name = STATE.venueSearch.venues[3].name;
     const address = STATE.venueSearch.venues[3].location.formattedAddress.join(', ');
+    const venuePostalCode = STATE.venueSearch.venues[3].location.postalCode;
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
+    getVenueWeatherFromApi(venuePostalCode);                        //run API call
     console.log(STATE);    //test to see what current value of STATE is
   });
 }
@@ -179,10 +244,12 @@ function submitVenue5DetailsButton() {    //listen for user click
     const venueId = STATE.venueSearch.venues[4].id;
     const name = STATE.venueSearch.venues[4].name;
     const address = STATE.venueSearch.venues[4].location.formattedAddress.join(', ');
+    const venuePostalCode = STATE.venueSearch.venues[4].location.postalCode;
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
+    getVenueWeatherFromApi(venuePostalCode);                        //run API call
     console.log(STATE);     //test to see what current value of STATE is
   });
 }
@@ -193,10 +260,12 @@ function submitVenue6DetailsButton() {   //listen for user click
     const venueId = STATE.venueSearch.venues[5].id;
     const name = STATE.venueSearch.venues[5].name;
     const address = STATE.venueSearch.venues[5].location.formattedAddress.join(', ');
+    const venuePostalCode = STATE.venueSearch.venues[5].location.postalCode;
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
+    getVenueWeatherFromApi(venuePostalCode);                        //run API call
     console.log(STATE);    //test to see what current value of STATE is
   });
 }
@@ -207,10 +276,12 @@ function submitVenue7DetailsButton() {   //listen for user click
     const venueId = STATE.venueSearch.venues[6].id;
     const name = STATE.venueSearch.venues[6].name;
     const address = STATE.venueSearch.venues[6].location.formattedAddress.join(', ');
+    const venuePostalCode = STATE.venueSearch.venues[6].location.postalCode;
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);         //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
+    getVenueWeatherFromApi(venuePostalCode);                        //run API call
     console.log(STATE);     //test to see what current value of STATE is
   });
 }
@@ -221,10 +292,12 @@ function submitVenue8DetailsButton() {    //listen for user click
     const venueId = STATE.venueSearch.venues[7].id;
     const name = STATE.venueSearch.venues[7].name;
     const address = STATE.venueSearch.venues[7].location.formattedAddress.join(', ');
+    const venuePostalCode = STATE.venueSearch.venues[7].location.postalCode;
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
+    getVenueWeatherFromApi(venuePostalCode);                        //run API call
     console.log(STATE);      //test to see what current value of STATE is
   });
 }
@@ -235,10 +308,12 @@ function submitVenue9DetailsButton() {    //listen for user click
     const venueId = STATE.venueSearch.venues[8].id;
     const name = STATE.venueSearch.venues[8].name;
     const address = STATE.venueSearch.venues[8].location.formattedAddress.join(', ');
+    const venuePostalCode = STATE.venueSearch.venues[8].location.postalCode;
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
+    getVenueWeatherFromApi(venuePostalCode);                        //run API call
     console.log(STATE);     //test to see what current value of STATE is
   });
 }
@@ -249,10 +324,12 @@ function submitVenue10DetailsButton() {   //listen for user click
     const venueId = STATE.venueSearch.venues[9].id;
     const name = STATE.venueSearch.venues[9].name;
     const address = STATE.venueSearch.venues[9].location.formattedAddress.join(', ');
+    const venuePostalCode = STATE.venueSearch.venues[9].location.postalCode;
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
+    getVenueWeatherFromApi(venuePostalCode);                        //run API call
     console.log(STATE);   //test to see what current value of STATE is
   });
 }
@@ -262,7 +339,7 @@ function submitBackButton() {        //listen for user click
     event.preventDefault();
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
-    getVenueSearchDataFromApi(STATE.query);  //run API call - pass in query from STATE object
+    getVenueSearchDataFromApi(STATE.postalCode);  //run API call - pass in postal code from STATE object
   })
 }
 
