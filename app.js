@@ -64,7 +64,7 @@ function getVenuePhotosFromApi(venueId, name, address) { //retreive venue photo 
   }).catch(showError);
 }
 
-function getVenueWeatherFromApi(venuePostalCode = STATE.postalCode) {  //reteive weather data/update STATE object
+function getVenueWeatherFromApi(venuePostalCode) {  //reteive weather data/update STATE object
   const venueWeatherEndpoint = 'https://api.weatherbit.io/v2.0/forecast/daily';
 
   const settings = {                //parameters for API call
@@ -129,7 +129,7 @@ function renderVenueWeatherData(day) {
   return `
   <div class="day">
     <h3>${date}</h3>
-    <img src="images/icons/${iconCode}.png" alt="Weather icon">
+    <img src="images/icons/${iconCode}.png" alt="Weather icon" width="50px">
     <p>${description}</p>
     <p>High temp: ${highTemp} °F</p>
     <p>Low temp: ${lowTemp} °F</p>
@@ -191,7 +191,13 @@ function submitVenue1DetailsButton() {       //listen for user click
     const venueId = STATE.venueSearch.venues[0].id;
     const name = STATE.venueSearch.venues[0].name;
     const address = STATE.venueSearch.venues[0].location.formattedAddress.join(', ');
-    const venuePostalCode = STATE.venueSearch.venues[0].location.postalCode;
+    let venuePostalCode = STATE.venueSearch.venues[0].location.postalCode;
+    
+    if (!venuePostalCode) {
+      venuePostalCode = STATE.postalCode;
+    }
+    
+    console.log(venuePostalCode);
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
@@ -206,7 +212,13 @@ function submitVenue2DetailsButton() {        //listen for user click
     const venueId = STATE.venueSearch.venues[1].id;
     const name = STATE.venueSearch.venues[1].name;
     const address = STATE.venueSearch.venues[1].location.formattedAddress.join(', ');
-    const venuePostalCode = STATE.venueSearch.venues[1].location.postalCode;
+    let venuePostalCode = STATE.venueSearch.venues[1].location.postalCode;
+    
+    if (!venuePostalCode) {
+      venuePostalCode = STATE.postalCode;
+    }
+    
+    console.log(venuePostalCode);
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
@@ -221,7 +233,13 @@ function submitVenue3DetailsButton() {    //listen for user click
     const venueId = STATE.venueSearch.venues[2].id;
     const name = STATE.venueSearch.venues[2].name;
     const address = STATE.venueSearch.venues[2].location.formattedAddress.join(', ');
-    const venuePostalCode = STATE.venueSearch.venues[2].location.postalCode;
+    let venuePostalCode = STATE.venueSearch.venues[2].location.postalCode;
+    
+    if (!venuePostalCode) {
+      venuePostalCode = STATE.postalCode;
+    }
+    
+    console.log(venuePostalCode);
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
@@ -236,7 +254,13 @@ function submitVenue4DetailsButton() {      //listen for user click
     const venueId = STATE.venueSearch.venues[3].id;
     const name = STATE.venueSearch.venues[3].name;
     const address = STATE.venueSearch.venues[3].location.formattedAddress.join(', ');
-    const venuePostalCode = STATE.venueSearch.venues[3].location.postalCode;
+    let venuePostalCode = STATE.venueSearch.venues[3].location.postalCode;
+    
+    if (!venuePostalCode) {
+      venuePostalCode = STATE.postalCode;
+    }
+    
+    console.log(venuePostalCode);
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
@@ -251,7 +275,13 @@ function submitVenue5DetailsButton() {    //listen for user click
     const venueId = STATE.venueSearch.venues[4].id;
     const name = STATE.venueSearch.venues[4].name;
     const address = STATE.venueSearch.venues[4].location.formattedAddress.join(', ');
-    const venuePostalCode = STATE.venueSearch.venues[4].location.postalCode;
+    let venuePostalCode = STATE.venueSearch.venues[4].location.postalCode;
+    
+    if (!venuePostalCode) {
+      venuePostalCode = STATE.postalCode;
+    }
+    
+    console.log(venuePostalCode);
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
@@ -266,7 +296,13 @@ function submitVenue6DetailsButton() {   //listen for user click
     const venueId = STATE.venueSearch.venues[5].id;
     const name = STATE.venueSearch.venues[5].name;
     const address = STATE.venueSearch.venues[5].location.formattedAddress.join(', ');
-    const venuePostalCode = STATE.venueSearch.venues[5].location.postalCode;
+    let venuePostalCode = STATE.venueSearch.venues[5].location.postalCode;
+    
+    if (!venuePostalCode) {
+      venuePostalCode = STATE.postalCode;
+    }
+    
+    console.log(venuePostalCode);
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
@@ -281,7 +317,13 @@ function submitVenue7DetailsButton() {   //listen for user click
     const venueId = STATE.venueSearch.venues[6].id;
     const name = STATE.venueSearch.venues[6].name;
     const address = STATE.venueSearch.venues[6].location.formattedAddress.join(', ');
-    const venuePostalCode = STATE.venueSearch.venues[6].location.postalCode;
+    let venuePostalCode = STATE.venueSearch.venues[6].location.postalCode;
+    
+    if (!venuePostalCode) {
+      venuePostalCode = STATE.postalCode;
+    }
+    
+    console.log(venuePostalCode);
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);         //toggle hidden attribute from HTML section
@@ -296,7 +338,13 @@ function submitVenue8DetailsButton() {    //listen for user click
     const venueId = STATE.venueSearch.venues[7].id;
     const name = STATE.venueSearch.venues[7].name;
     const address = STATE.venueSearch.venues[7].location.formattedAddress.join(', ');
-    const venuePostalCode = STATE.venueSearch.venues[7].location.postalCode;
+    let venuePostalCode = STATE.venueSearch.venues[7].location.postalCode;
+    
+    if (!venuePostalCode) {
+      venuePostalCode = STATE.postalCode;
+    }
+    
+    console.log(venuePostalCode);
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
@@ -311,7 +359,13 @@ function submitVenue9DetailsButton() {    //listen for user click
     const venueId = STATE.venueSearch.venues[8].id;
     const name = STATE.venueSearch.venues[8].name;
     const address = STATE.venueSearch.venues[8].location.formattedAddress.join(', ');
-    const venuePostalCode = STATE.venueSearch.venues[8].location.postalCode;
+    let venuePostalCode = STATE.venueSearch.venues[8].location.postalCode;
+    
+    if (!venuePostalCode) {
+      venuePostalCode = STATE.postalCode;
+    }
+    
+    console.log(venuePostalCode);
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
@@ -326,7 +380,13 @@ function submitVenue10DetailsButton() {   //listen for user click
     const venueId = STATE.venueSearch.venues[9].id;
     const name = STATE.venueSearch.venues[9].name;
     const address = STATE.venueSearch.venues[9].location.formattedAddress.join(', ');
-    const venuePostalCode = STATE.venueSearch.venues[9].location.postalCode;
+    let venuePostalCode = STATE.venueSearch.venues[9].location.postalCode;
+    
+    if (!venuePostalCode) {
+      venuePostalCode = STATE.postalCode;
+    }
+
+    console.log(venuePostalCode);
 
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
