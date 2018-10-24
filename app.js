@@ -103,7 +103,6 @@ function displayVenuePhotos(name, address) {    //pass results through the HTML 
     <div>
       ${photos}
     </div>
-    <button class="js-back-btn">Back to results</button>
   </div>`;
 
   $('.js-results').html(photosHtml);    //display data in HTML section
@@ -114,10 +113,12 @@ function displayVenueWeatherData() {
   const weatherHtml = `
   <div class="weather">
   ${weather}
-  </div> 
+  </div>
+  <button class="js-back-btn">Back to results</button> 
   `;
 
-  $('.js-back-btn').before(weatherHtml);
+  $('.js-weather').html(weatherHtml);
+  $('.js-weather').prop('hidden', false);
 }
 
 function renderVenueWeatherData(day) {
@@ -181,7 +182,10 @@ function submitBackButton() {        //listen for user click
     event.preventDefault();
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
+    $('.js-results').html('');
+    $('.js-weather').prop('hidden', true);
     getVenueSearchDataFromApi(STATE.postalCode);  //run API call - pass in postal code from STATE object
+
   })
 }
 
