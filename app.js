@@ -32,7 +32,7 @@ function getVenueSearchDataFromApi(searchTerm) {  //retreive venue search data/u
 
   $.ajax(settings).then((results) => {        //api call
     STATE.venueSearch = results.response;     //store results in STATE object
-    displayVenueSearchData();
+    displayVenueSearchData();                  //call display function
     $('.js-search-form').prop('hidden', false);   //toggle hidden attribute from HTML section
     $('.js-message').prop('hidden', true);
   }).catch(showError);
@@ -58,16 +58,16 @@ function getVenuePhotosFromApi(venueId, name, address) { //retreive venue photo 
   
   $.ajax(settings).then((results) => {      //API call
     STATE.venuePhotos = results.response;   //store results in STATE object
-    displayVenuePhotos(name, address);      //call function - pass in name & address parameters from API call
+    displayVenuePhotos(name, address);      //call display function - pass in name & address parameters from API call
     $('.js-search-form').prop('hidden', true);  //toggle hidden attribute from HTML section
     $('.js-message').prop('hidden', true);
   }).catch(showError);
 }
 
-function getVenueWeatherFromApi(venuePostalCode) {
+function getVenueWeatherFromApi(venuePostalCode = STATE.postalCode) {  //reteive weather data/update STATE object
   const venueWeatherEndpoint = 'https://api.weatherbit.io/v2.0/forecast/daily';
 
-  const settings = {
+  const settings = {                //parameters for API call
     url: venueWeatherEndpoint,
     data: {
       key: '0a4e350d938e4737979ee5d05f620a49',
@@ -80,10 +80,12 @@ function getVenueWeatherFromApi(venuePostalCode) {
     type: 'GET'
   };
 
-  $.ajax(settings).then((results) => {
-    STATE.venueWeather = results.data;
-    displayVenueWeatherData();
-  }).catch(showError);
+  $.ajax(settings).then((results) => {   //API call
+    STATE.venueWeather = results.data;   //store results in STATE object
+    displayVenueWeatherData();          //call display function
+  }).catch(showError); 
+
+  console.log(STATE);   //test to see what current value of STATE is
 }
 
 function displayVenueSearchData() {       //pass results through the HTML rendering function
@@ -174,6 +176,15 @@ function submitVenueSearch() {              //listen for user submit
   });
 }
 
+function submitBackButton() {        //listen for user click
+  $('body').on('click', '.js-back-btn', function(event) {
+    event.preventDefault();
+    $('.js-message').html('Loading...please wait');
+    $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
+    getVenueSearchDataFromApi(STATE.postalCode);  //run API call - pass in postal code from STATE object
+  })
+}
+
 function submitVenue1DetailsButton() {       //listen for user click
   $('body').on('click', '.js-details-btn-1', function(event) {
     event.preventDefault();
@@ -186,7 +197,6 @@ function submitVenue1DetailsButton() {       //listen for user click
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);  //run API call - pass in id, name, address
     getVenueWeatherFromApi(venuePostalCode);                        //run API call
-    console.log(STATE);      //test to see what current value of STATE is
   });
 }
   
@@ -202,7 +212,6 @@ function submitVenue2DetailsButton() {        //listen for user click
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
     getVenueWeatherFromApi(venuePostalCode);                        //run API call
-    console.log(STATE);     //test to see what current value of STATE is
   });
 }
 
@@ -218,7 +227,6 @@ function submitVenue3DetailsButton() {    //listen for user click
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
     getVenueWeatherFromApi(venuePostalCode);                        //run API call
-    console.log(STATE);    //test to see what current value of STATE is
   });
 }
 
@@ -234,7 +242,6 @@ function submitVenue4DetailsButton() {      //listen for user click
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
     getVenueWeatherFromApi(venuePostalCode);                        //run API call
-    console.log(STATE);    //test to see what current value of STATE is
   });
 }
 
@@ -250,7 +257,6 @@ function submitVenue5DetailsButton() {    //listen for user click
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
     getVenueWeatherFromApi(venuePostalCode);                        //run API call
-    console.log(STATE);     //test to see what current value of STATE is
   });
 }
 
@@ -266,7 +272,6 @@ function submitVenue6DetailsButton() {   //listen for user click
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
     getVenueWeatherFromApi(venuePostalCode);                        //run API call
-    console.log(STATE);    //test to see what current value of STATE is
   });
 }
 
@@ -282,7 +287,6 @@ function submitVenue7DetailsButton() {   //listen for user click
     $('.js-message').prop('hidden', false);         //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
     getVenueWeatherFromApi(venuePostalCode);                        //run API call
-    console.log(STATE);     //test to see what current value of STATE is
   });
 }
 
@@ -298,7 +302,6 @@ function submitVenue8DetailsButton() {    //listen for user click
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
     getVenueWeatherFromApi(venuePostalCode);                        //run API call
-    console.log(STATE);      //test to see what current value of STATE is
   });
 }
 
@@ -314,7 +317,6 @@ function submitVenue9DetailsButton() {    //listen for user click
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
     getVenueWeatherFromApi(venuePostalCode);                        //run API call
-    console.log(STATE);     //test to see what current value of STATE is
   });
 }
 
@@ -330,17 +332,7 @@ function submitVenue10DetailsButton() {   //listen for user click
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
     getVenueWeatherFromApi(venuePostalCode);                        //run API call
-    console.log(STATE);   //test to see what current value of STATE is
   });
-}
-
-function submitBackButton() {        //listen for user click
-  $('body').on('click', '.js-back-btn', function(event) {
-    event.preventDefault();
-    $('.js-message').html('Loading...please wait');
-    $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
-    getVenueSearchDataFromApi(STATE.postalCode);  //run API call - pass in postal code from STATE object
-  })
 }
 
 function showError() {    //display error
@@ -349,7 +341,8 @@ function showError() {    //display error
 }
 
 function handleBeachBum() {   //document ready functions
-  submitVenueSearch();             
+  submitVenueSearch();  
+  submitBackButton();           
   submitVenue1DetailsButton();
   submitVenue2DetailsButton();
   submitVenue3DetailsButton();
@@ -360,6 +353,5 @@ function handleBeachBum() {   //document ready functions
   submitVenue8DetailsButton();
   submitVenue9DetailsButton();
   submitVenue10DetailsButton();
-  submitBackButton();
 }
   $(handleBeachBum);       //call document ready function
