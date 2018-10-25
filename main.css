@@ -1,5 +1,102 @@
 * {
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Helvetica, Arial, sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+.container {
+    margin: 15px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex-header {
+    flex: 1;
+}
+
+.flex-main {
+    flex: 10;
+    text-align: center;
+    overflow-y: scroll;
+}
+
+.flex-footer {
+    flex: 1;
+}
+
+.flex-header h1 {
+    margin: 20px;
+}
+
+.form {
+    margin-bottom: 25px;
+}
+
+.form p {
+    margin: 10px;
+}
+
+.search-result {
+    margin: 10px;
+}
+
+.search-result h2, .search-result h3 {
+    margin-bottom: 10px;
+}
+
+.details, .back, .submit {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.input {
+    font-size: 1em;
+    padding: 5px;
+}
+
+.photos h2, .photos h3 {
+    margin: 10px;
+}
+
+.weather {
+    margin: 20px;
+    display: flex;
+}
+
+.day {
+    margin-top: 20px;
+    padding-right: 20px;
+}
+
+.forecast-img {
+    width: 50px;
+    margin-top: 5px;
+}
+
+.venue-img {
+    padding: 10px;
+    border-radius: 35%;
+}
+
+.fsq-attribution {
+    margin-top: 8px;
+    width: 200px;
+}
+
+.wb-attribution {
+    margin-top: 20px;
+}
+
+@media (max-width: 845px) {
+    .weather {
+        flex-direction: column;
+    }
 }

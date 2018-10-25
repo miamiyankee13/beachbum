@@ -98,7 +98,7 @@ function displayVenueSearchData() {                //pass search results through
 function displayVenuePhotos(name, address) {       //pass photo results through the HTML rendering function
   const photos = STATE.venuePhotos.photos.items.map((item) => renderVenuePhotos(item)).join('');
   const photosHtml = `
-  <div>
+  <div class="photos">
     <h2>${name}</h2>
     <h3>${address}</h3>
     <div>
@@ -116,7 +116,7 @@ function displayVenueWeatherData() {             //pass weather results through 
   <div class="weather">
   ${weather}
   </div>
-  <button class="js-back-btn">Back to results</button> 
+  <button class="js-back-btn back">Back to results</button> 
   `;
 
   $('.js-weather').html(weatherHtml);             //display data in HTML section
@@ -143,7 +143,7 @@ function renderVenueWeatherData(day) {             //HTML template for each weat
   return `
   <div class="day">
     <h3>${weekday} ${month}/${dayNum}</h3>
-    <img src="images/icons/${iconCode}.png" alt="Weather icon" class="forecast-img" width="50px">
+    <img src="images/icons/${iconCode}.png" alt="Weather icon" class="forecast-img">
     <p>${description}</p>
     <p>High temp: ${highTemp} °F</p>
     <p>Low temp: ${lowTemp} °F</p>
@@ -159,7 +159,7 @@ function renderVenueSearchData(result) {                         //HTML template
   <div class="search-result">
     <h2>${name}</h2>
     <h3>${address}</h3>
-    <button class="js-details-btn" data-index="${counter - 1}">Details</button>
+    <button class="js-details-btn details" data-index="${counter - 1}">Details</button>
   </div>
   <br>
   `
@@ -179,7 +179,7 @@ function submitVenueSearch() {                                       //listen fo
     event.preventDefault();
     const userInput = $('.js-input').val();                          //get user input
     if (userInput.length <= 0) {
-      $('.js-message').html('Please enter a valid postal code');     //display message if input is empty
+      $('.js-message').html('Please enter a location');     //display message if input is empty
       $('.js-message').prop('hidden', false);                        //toggle hidden attribute from HTML section
     } else {
       $('.js-input').val("");                                        //clear value of input field
