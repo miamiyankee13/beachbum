@@ -130,7 +130,6 @@ function renderVenueWeatherData(day) {             //HTML template for each weat
   const lowTemp = day.min_temp;
   let date = day.valid_date;
  
-  //TODO remove width & make CSS style for .forecast-img
   return `
   <div class="day">
     <h3>${date}</h3>
@@ -159,7 +158,7 @@ function renderVenueSearchData(result) {                         //HTML template
 function renderVenuePhotos(result) {                          //HTML template for each photo result
   const prefix = result.prefix;
   const suffix = result.suffix;
-  const size = '300x300'
+  const size = '250x250'
   return `
     <img src="${prefix}${size}${suffix}" alt="Beach photo" class="venue-img">
   `
