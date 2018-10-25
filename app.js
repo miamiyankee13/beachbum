@@ -6,13 +6,13 @@ const STATE = {                              //declare object to store data retr
   venueSearch: null,
   venuePhotos: null,
   venueWeather: null,
-  postalCode: null,
+  query: null,
 };
 
 let counter = 0;                                   //declare counter for rendering details buttons data-index
 
 function getVenueSearchDataFromApi(searchTerm) {       //retreive venue search data/update STATE object
-  STATE.postalCode = searchTerm;                       //store search term in STATE object
+  STATE.query = searchTerm;                       //store search term in STATE object
   const venueSearchEndpoint = 'https://api.foursquare.com/v2/venues/search'; 
   
   const settings = {                                   //parameters for API call
@@ -64,7 +64,7 @@ function getVenuePhotosFromApi(venueId, name, address) {     //retreive venue ph
   }).catch(showError);                          //display error if call fails
 }
 
-function getVenueWeatherFromApi(venuePostalCode) {        //reteive weather data/update STATE object
+function getVenueWeatherFromApi(lat, long) {        //reteive weather data/update STATE object
   const venueWeatherEndpoint = 'https://api.weatherbit.io/v2.0/forecast/daily';
 
   const settings = {                                      //parameters for API call
@@ -72,7 +72,8 @@ function getVenueWeatherFromApi(venuePostalCode) {        //reteive weather data
     data: {
       key: '0a4e350d938e4737979ee5d05f620a49',
       lang: 'en',
-      postal_code: `${venuePostalCode}`,
+      lat: `${lat}`,
+      lon: `${long}`,
       units: 'I',
       days: 5
     },
@@ -196,7 +197,7 @@ function submitBackButton() {                                     //listen for u
     $('.js-message').prop('hidden', false);                      //toggle hidden attribute from HTML sections
     $('.js-photos').prop('hidden', true);
     $('.js-weather').prop('hidden', true);
-    getVenueSearchDataFromApi(STATE.postalCode);                 //run API call - pass in postal code from STATE object
+    getVenueSearchDataFromApi(STATE.query);                 //run API call - pass in postal code from STATE object
 
   })
 }
@@ -209,17 +210,16 @@ function submitVenueDetailsButton() {                             //listen for u
     const venueId = venue.id;               
     const name = venue.name;
     const address = venue.location.formattedAddress.join(', ');
-    let venuePostalCode = venue.location.postalCode;
+    const lat = venue.location.lat;
+    const long = venue.location.lng;
     
-    if (!venuePostalCode) {                                   //if no venue postal code, assign value of original query
-      venuePostalCode = STATE.postalCode;
-    }
+  
     
     $('.js-results').prop('hidden', true);                    //toggle hidden attribute from HTML sections
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);                   
     getVenuePhotosFromApi(venueId, name, address);            //run API call - pass in venue id, name, address
-    getVenueWeatherFromApi(venuePostalCode);                  //run API call - pass in venue postal code
+    getVenueWeatherFromApi(lat, long);                  //run API call - pass in venue postal code
   });
 }
 
