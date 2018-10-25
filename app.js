@@ -9,7 +9,7 @@ const STATE = {                              //declare object to store data retr
   postalCode: null,
 };
 
-let counter = 0;                                   //declare counter for rendering details buttons
+let counter = 0;                                   //declare counter for rendering details buttons data-index
 
 function getVenueSearchDataFromApi(searchTerm) {       //retreive venue search data/update STATE object
   STATE.postalCode = searchTerm;                       //store search term in STATE object
@@ -158,7 +158,7 @@ function renderVenueSearchData(result) {                         //HTML template
   <div class="search-result">
     <h2>${name}</h2>
     <h3>${address}</h3>
-    <button class="js-details-btn-${counter}">Details</button>
+    <button class="js-details-btn" data-index="${counter - 1}">Details</button>
   </div>
   <br>
   `
@@ -201,13 +201,15 @@ function submitBackButton() {                                     //listen for u
   })
 }
 
-function submitVenue1DetailsButton() {                             //listen for user click
-  $('body').on('click', '.js-details-btn-1', function(event) {
+function submitVenueDetailsButton() {                             //listen for user click
+  $('body').on('click', '.js-details-btn', function(event) {
     event.preventDefault();
-    const venueId = STATE.venueSearch.venues[0].id;                //retreive venue specific data
-    const name = STATE.venueSearch.venues[0].name;
-    const address = STATE.venueSearch.venues[0].location.formattedAddress.join(', ');
-    let venuePostalCode = STATE.venueSearch.venues[0].location.postalCode;
+    const index = $(event.target).attr('data-index');            //retreive venue specific data
+    const venue = STATE.venueSearch.venues[index];
+    const venueId = venue.id;               
+    const name = venue.name;
+    const address = venue.location.formattedAddress.join(', ');
+    let venuePostalCode = venue.location.postalCode;
     
     if (!venuePostalCode) {                                   //if no venue postal code, assign value of original query
       venuePostalCode = STATE.postalCode;
@@ -218,186 +220,6 @@ function submitVenue1DetailsButton() {                             //listen for 
     $('.js-message').prop('hidden', false);                   
     getVenuePhotosFromApi(venueId, name, address);            //run API call - pass in venue id, name, address
     getVenueWeatherFromApi(venuePostalCode);                  //run API call - pass in venue postal code
-  });
-}
-  
-function submitVenue2DetailsButton() {        
-  $('body').on('click', '.js-details-btn-2', function(event) {
-    event.preventDefault();
-    const venueId = STATE.venueSearch.venues[1].id;
-    const name = STATE.venueSearch.venues[1].name;
-    const address = STATE.venueSearch.venues[1].location.formattedAddress.join(', ');
-    let venuePostalCode = STATE.venueSearch.venues[1].location.postalCode;
-    
-    if (!venuePostalCode) {
-      venuePostalCode = STATE.postalCode;
-    }
-    
-    $('.js-results').prop('hidden', true);
-    $('.js-message').html('Loading...please wait');
-    $('.js-message').prop('hidden', false);          
-    getVenuePhotosFromApi(venueId, name, address);   
-    getVenueWeatherFromApi(venuePostalCode);                        
-  });
-}
-
-function submitVenue3DetailsButton() {  
-  $('body').on('click', '.js-details-btn-3', function(event) {
-    event.preventDefault();
-    const venueId = STATE.venueSearch.venues[2].id;
-    const name = STATE.venueSearch.venues[2].name;
-    const address = STATE.venueSearch.venues[2].location.formattedAddress.join(', ');
-    let venuePostalCode = STATE.venueSearch.venues[2].location.postalCode;
-    
-    if (!venuePostalCode) {
-      venuePostalCode = STATE.postalCode;
-    }
-    
-    $('.js-results').prop('hidden', true);
-    $('.js-message').html('Loading...please wait');
-    $('.js-message').prop('hidden', false);          
-    getVenuePhotosFromApi(venueId, name, address);    
-    getVenueWeatherFromApi(venuePostalCode);                      
-  });
-}
-
-function submitVenue4DetailsButton() {      
-  $('body').on('click', '.js-details-btn-4', function(event) {
-    event.preventDefault();
-    const venueId = STATE.venueSearch.venues[3].id;
-    const name = STATE.venueSearch.venues[3].name;
-    const address = STATE.venueSearch.venues[3].location.formattedAddress.join(', ');
-    let venuePostalCode = STATE.venueSearch.venues[3].location.postalCode;
-    
-    if (!venuePostalCode) {
-      venuePostalCode = STATE.postalCode;
-    }
-    
-    $('.js-results').prop('hidden', true);
-    $('.js-message').html('Loading...please wait');
-    $('.js-message').prop('hidden', false);         
-    getVenuePhotosFromApi(venueId, name, address);   
-    getVenueWeatherFromApi(venuePostalCode);                     
-  });
-}
-
-function submitVenue5DetailsButton() {   
-  $('body').on('click', '.js-details-btn-5', function(event) {
-    event.preventDefault();
-    const venueId = STATE.venueSearch.venues[4].id;
-    const name = STATE.venueSearch.venues[4].name;
-    const address = STATE.venueSearch.venues[4].location.formattedAddress.join(', ');
-    let venuePostalCode = STATE.venueSearch.venues[4].location.postalCode;
-    
-    if (!venuePostalCode) {
-      venuePostalCode = STATE.postalCode;
-    }
-    
-    $('.js-results').prop('hidden', true);
-    $('.js-message').html('Loading...please wait');
-    $('.js-message').prop('hidden', false);           
-    getVenuePhotosFromApi(venueId, name, address);    
-    getVenueWeatherFromApi(venuePostalCode);                       
-  });
-}
-
-function submitVenue6DetailsButton() {  
-  $('body').on('click', '.js-details-btn-6', function(event) {
-    event.preventDefault();
-    const venueId = STATE.venueSearch.venues[5].id;
-    const name = STATE.venueSearch.venues[5].name;
-    const address = STATE.venueSearch.venues[5].location.formattedAddress.join(', ');
-    let venuePostalCode = STATE.venueSearch.venues[5].location.postalCode;
-    
-    if (!venuePostalCode) {
-      venuePostalCode = STATE.postalCode;
-    }
-    
-    $('.js-results').prop('hidden', true);
-    $('.js-message').html('Loading...please wait');
-    $('.js-message').prop('hidden', false);          
-    getVenuePhotosFromApi(venueId, name, address);   
-    getVenueWeatherFromApi(venuePostalCode);                       
-  });
-}
-
-function submitVenue7DetailsButton() {  
-  $('body').on('click', '.js-details-btn-7', function(event) {
-    event.preventDefault();
-    const venueId = STATE.venueSearch.venues[6].id;
-    const name = STATE.venueSearch.venues[6].name;
-    const address = STATE.venueSearch.venues[6].location.formattedAddress.join(', ');
-    let venuePostalCode = STATE.venueSearch.venues[6].location.postalCode;
-    
-    if (!venuePostalCode) {
-      venuePostalCode = STATE.postalCode;
-    }
-    
-    $('.js-results').prop('hidden', true);
-    $('.js-message').html('Loading...please wait');
-    $('.js-message').prop('hidden', false);        
-    getVenuePhotosFromApi(venueId, name, address);  
-    getVenueWeatherFromApi(venuePostalCode);                   
-  });
-}
-
-function submitVenue8DetailsButton() {   
-  $('body').on('click', '.js-details-btn-8', function(event) {
-    event.preventDefault();
-    const venueId = STATE.venueSearch.venues[7].id;
-    const name = STATE.venueSearch.venues[7].name;
-    const address = STATE.venueSearch.venues[7].location.formattedAddress.join(', ');
-    let venuePostalCode = STATE.venueSearch.venues[7].location.postalCode;
-    
-    if (!venuePostalCode) {
-      venuePostalCode = STATE.postalCode;
-    }
-  
-    $('.js-results').prop('hidden', true);
-    $('.js-message').html('Loading...please wait');
-    $('.js-message').prop('hidden', false);        
-    getVenuePhotosFromApi(venueId, name, address);   
-    getVenueWeatherFromApi(venuePostalCode);                   
-  });
-}
-
-function submitVenue9DetailsButton() {    
-  $('body').on('click', '.js-details-btn-9', function(event) {
-    event.preventDefault();
-    const venueId = STATE.venueSearch.venues[8].id;
-    const name = STATE.venueSearch.venues[8].name;
-    const address = STATE.venueSearch.venues[8].location.formattedAddress.join(', ');
-    let venuePostalCode = STATE.venueSearch.venues[8].location.postalCode;
-    
-    if (!venuePostalCode) {
-      venuePostalCode = STATE.postalCode;
-    }
-    
-    $('.js-results').prop('hidden', true);
-    $('.js-message').html('Loading...please wait');
-    $('.js-message').prop('hidden', false);      
-    getVenuePhotosFromApi(venueId, name, address);   
-    getVenueWeatherFromApi(venuePostalCode);                        
-  });
-}
-
-function submitVenue10DetailsButton() {   
-  $('body').on('click', '.js-details-btn-10', function(event) {
-    event.preventDefault();
-    const venueId = STATE.venueSearch.venues[9].id;
-    const name = STATE.venueSearch.venues[9].name;
-    const address = STATE.venueSearch.venues[9].location.formattedAddress.join(', ');
-    let venuePostalCode = STATE.venueSearch.venues[9].location.postalCode;
-    
-    if (!venuePostalCode) {
-      venuePostalCode = STATE.postalCode;
-    }
-
-    $('.js-results').prop('hidden', true);
-    $('.js-message').html('Loading...please wait');
-    $('.js-message').prop('hidden', false);          
-    getVenuePhotosFromApi(venueId, name, address);    
-    getVenueWeatherFromApi(venuePostalCode);                        
   });
 }
 
@@ -432,15 +254,6 @@ function convertDateToDay(date) {           //retreive day of week string from d
 function handleBeachBum() {            //document ready functions
   submitVenueSearch();  
   submitBackButton();           
-  submitVenue1DetailsButton();
-  submitVenue2DetailsButton();
-  submitVenue3DetailsButton();
-  submitVenue4DetailsButton();
-  submitVenue5DetailsButton();
-  submitVenue6DetailsButton();
-  submitVenue7DetailsButton();
-  submitVenue8DetailsButton();
-  submitVenue9DetailsButton();
-  submitVenue10DetailsButton();
+  submitVenueDetailsButton();
 }
   $(handleBeachBum);                  //call document ready function
