@@ -128,21 +128,12 @@ function renderVenueWeatherData(day) {             //HTML template for each weat
   const iconCode = day.weather.icon;
   const highTemp = day.max_temp;
   const lowTemp = day.min_temp;
-
   let date = day.valid_date;
-  let year = date.split('-').shift();               //re-arrange date string format to 'MM-DD-YYYY'
-  let monthAndDay = date.split('-').slice(1);
-  monthAndDay.push(year);
-  let newDate = monthAndDay.join('-');
-
-  const formattedDate =  new Date(newDate);          //convert date string into date object
-  const weekday = convertDateToDay(formattedDate);   //retrive weekday, month, year
-  const month = formattedDate.getMonth() + 1;
-  const dayNum = formattedDate.getDate();
+ 
   //TODO remove width & make CSS style for .forecast-img
   return `
   <div class="day">
-    <h3>${weekday} ${month}/${dayNum}</h3>
+    <h3>${date}</h3>
     <img src="images/icons/${iconCode}.png" alt="Weather icon" class="forecast-img">
     <p>${description}</p>
     <p>High temp: ${highTemp} °F</p>
@@ -181,8 +172,7 @@ function submitVenueSearch() {                                       //listen fo
     if (userInput.length <= 0) {
       $('.js-message').html('Please enter a location');     //display message if input is empty
       $('.js-message').prop('hidden', false);                        //toggle hidden attribute from HTML section
-    } else {
-      $('.js-input').val("");                                        //clear value of input field
+    } else {                                        //clear value of input field
       $('.js-message').html('Loading...please wait');
       $('.js-message').prop('hidden', false);                        //toggle hidden attribute from HTML section
       getVenueSearchDataFromApi(userInput);                          //run API call - pass in user input
@@ -226,29 +216,6 @@ function submitVenueDetailsButton() {                             //listen for u
 function showError() {                        //display error
   $('.js-message').prop('hidden', false);     //toggle hidden attribute from HTML section
   $('.js-message').html('There was an error loading the required data. Please check your internet connection')
-}
-
-function convertDateToDay(date) {           //retreive day of week string from date
-  let stringOfDay = '';
-  let numOfDay = date.getDay();
-
-  if (numOfDay === 0) {
-    stringOfDay = 'Sunday';
-  } else if (numOfDay === 1) {
-    stringOfDay = 'Monday';
-  } else if (numOfDay === 2) {
-    stringOfDay = 'Tuesday';
-  } else if (numOfDay ===3) {
-    stringOfDay = 'Wednesday';
-  } else if (numOfDay === 4) {
-    stringOfDay = 'Thursday';
-  } else if (numOfDay === 5) {
-    stringOfDay = 'Friday';
-  } else if (numOfDay === 6) {
-    stringOfDay = 'Saturday';
-  } 
-
-  return stringOfDay;
 }
 
 function handleBeachBum() {            //document ready functions
