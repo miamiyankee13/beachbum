@@ -105,7 +105,8 @@ function displayVenuePhotos(name, address) {    //pass results through the HTML 
     </div>
   </div>`;
 
-  $('.js-results').html(photosHtml);    //display data in HTML section
+  $('.js-photos').html(photosHtml);    //display data in HTML section
+  $('.js-photos').prop('hidden', false);
 }
 
 function displayVenueWeatherData() {
@@ -126,10 +127,13 @@ function renderVenueWeatherData(day) {
   const iconCode = day.weather.icon;
   const highTemp = day.max_temp;
   const lowTemp = day.min_temp;
-  const date = day.valid_date;
+  const formattedDate =  new Date(day.valid_date);
+  const weekday = convertDateToDay(formattedDate);
+  const month = formattedDate.getMonth() + 1;
+  const dayNum = formattedDate.getDate();
   return `
   <div class="day">
-    <h3>${date}</h3>
+    <h3>${weekday} ${month}/${dayNum}</h3>
     <img src="images/icons/${iconCode}.png" alt="Weather icon" width="50px">
     <p>${description}</p>
     <p>High temp: ${highTemp} °F</p>
@@ -182,7 +186,7 @@ function submitBackButton() {        //listen for user click
     event.preventDefault();
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
-    $('.js-results').html('');
+    $('.js-photos').prop('hidden', true);
     $('.js-weather').prop('hidden', true);
     getVenueSearchDataFromApi(STATE.postalCode);  //run API call - pass in postal code from STATE object
 
@@ -202,7 +206,7 @@ function submitVenue1DetailsButton() {       //listen for user click
     }
     
     console.log(venuePostalCode);
-
+    $('.js-results').prop('hidden', true);
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);  //run API call - pass in id, name, address
@@ -223,7 +227,7 @@ function submitVenue2DetailsButton() {        //listen for user click
     }
     
     console.log(venuePostalCode);
-
+    $('.js-results').prop('hidden', true);
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
@@ -244,7 +248,7 @@ function submitVenue3DetailsButton() {    //listen for user click
     }
     
     console.log(venuePostalCode);
-
+    $('.js-results').prop('hidden', true);
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
@@ -265,7 +269,7 @@ function submitVenue4DetailsButton() {      //listen for user click
     }
     
     console.log(venuePostalCode);
-
+    $('.js-results').prop('hidden', true);
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
@@ -286,7 +290,7 @@ function submitVenue5DetailsButton() {    //listen for user click
     }
     
     console.log(venuePostalCode);
-
+    $('.js-results').prop('hidden', true);
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
@@ -307,7 +311,7 @@ function submitVenue6DetailsButton() {   //listen for user click
     }
     
     console.log(venuePostalCode);
-
+    $('.js-results').prop('hidden', true);
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
@@ -328,7 +332,7 @@ function submitVenue7DetailsButton() {   //listen for user click
     }
     
     console.log(venuePostalCode);
-
+    $('.js-results').prop('hidden', true);
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);         //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
@@ -349,7 +353,7 @@ function submitVenue8DetailsButton() {    //listen for user click
     }
     
     console.log(venuePostalCode);
-
+    $('.js-results').prop('hidden', true);
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
@@ -370,7 +374,7 @@ function submitVenue9DetailsButton() {    //listen for user click
     }
     
     console.log(venuePostalCode);
-
+    $('.js-results').prop('hidden', true);
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);          //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);   //run API call - pass in id, name, address
@@ -391,7 +395,7 @@ function submitVenue10DetailsButton() {   //listen for user click
     }
 
     console.log(venuePostalCode);
-
+    $('.js-results').prop('hidden', true);
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);           //toggle hidden attribute from HTML section
     getVenuePhotosFromApi(venueId, name, address);    //run API call - pass in id, name, address
@@ -402,6 +406,29 @@ function submitVenue10DetailsButton() {   //listen for user click
 function showError() {    //display error
   $('.js-message').prop('hidden', false);    //toggle hidden attribute from HTML section
   $('.js-message').html('There was an error loading the required data. Please check your internet connection')
+}
+
+function convertDateToDay(date) {
+  let stringOfDay = '';
+  let numOfDay = date.getDay();
+
+  if (numOfDay === 0) {
+    stringOfDay = 'Sunday';
+  } else if (numOfDay === 1) {
+    stringOfDay = 'Monday';
+  } else if (numOfDay === 2) {
+    stringOfDay = 'Tuesday';
+  } else if (numOfDay ===3) {
+    stringOfDay = 'Wednesday';
+  } else if (numOfDay === 4) {
+    stringOfDay = 'Thursday';
+  } else if (numOfDay === 5) {
+    stringOfDay = 'Friday';
+  } else if (numOfDay === 6) {
+    stringOfDay = 'Saturday';
+  } 
+
+  return stringOfDay;
 }
 
 function handleBeachBum() {   //document ready functions
