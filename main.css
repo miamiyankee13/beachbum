@@ -7,9 +7,6 @@
 
 html, body {
     height: 100%;
-}
-
-body {
     background-image: url("images/ocean.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -42,6 +39,7 @@ a {
 
 .flex-footer {               /* flex item */
     flex: 1; 
+    margin-bottom: 10px;
 }
 
 .flex-header h1 {
@@ -69,7 +67,7 @@ a {
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 14px;
     background-color: seashell;
     color: darkblue;
 }
