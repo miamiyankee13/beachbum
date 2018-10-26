@@ -149,7 +149,7 @@ function renderVenueSearchData(result) {                         //HTML template
   <div class="search-result">
     <h2>${name}</h2>
     <h3>${address}</h3>
-    <button class="js-details-btn details" data-index="${counter - 1}">View Photos & Weather Info</button>
+    <button class="js-details-btn details" data-index="${counter - 1}">View Weather Info</button>
   </div>
   <br>
   `
