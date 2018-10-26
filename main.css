@@ -18,8 +18,12 @@ a {
     color: navy;
 }
 
+h2, h3 {
+    font-family: 'Permanent Marker', cursive;
+}
+
 .container {
-    margin: 5px;
+    margin: 1px;
     height: 100%;              /* allows content to stretch entire page */
     display: flex;             /* flexbox container settings */
     flex-direction: column;
@@ -55,6 +59,7 @@ a {
 .form p {
     margin: 10px;
     font-weight: bold;
+    font-family: 'Permanent Marker', cursive;
 }
 
 .search-result {
@@ -74,6 +79,7 @@ a {
     font-size: 14px;
     background-color: #ffefd5;
     color: navy;
+    font-family: 'Permanent Marker', cursive;
 }
 
 .input {

@@ -214,7 +214,7 @@ function submitVenueDetailsButton() {                             //listen for u
 
 function showError() {                        //display error
   $('.js-message').prop('hidden', false);     //toggle hidden attribute from HTML section
-  $('.js-message').html('There was an error loading the required data. Please check your internet connection')
+  $('.js-message').html('There was an error loading the requested data')
 }
 
 function handleBeachBum() {            //document ready functions
