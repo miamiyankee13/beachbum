@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Search for nearby beaches by entering a desired location">
     <title>BeachBum</title>                                     
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
     <link href="main.css" rel="stylesheet" type="text/css">      
   </head>
 <body>
@@ -15,11 +16,10 @@
   <main role="main" class="flex-main">
     <section role="region">
         <form class="js-search-form form" aria-live="assertive" hidden>
-          <p>Looking for nearby beaches? BeachBum has you covered!</p>
-          <p>Please enter the desired location using any of the formats listed below.</p>
+          <p>Please enter your location using one of the following formats:</p>
           <p>(City, State - City, Country - Postal Code)</p>
-          <label for="query">Location:</label>
-          <input type="text" name="query" id="query" class="js-input input">
+          <input type="text" name="query" class="js-input input">
+          <br>
           <button type="submit" class="js-submit submit">Search</button>
         </form>
     </section>
@@ -38,7 +38,9 @@
   </main>
   <footer role="contentinfo" class="flex-footer">
     <p class="wb-attribution">Powered by <a href="https://www.weatherbit.io/" target="_blank">Weatherbit API</a></p>
-    <img src="images/powered-by-foursquare-blue.png" alt="Powered by Foursquare" class="fsq-attribution">
+    <a href="https://developer.foursquare.com/places-api" target="_blank">
+      <img src="images/powered-by-foursquare-blue.png" alt="Powered by Foursquare" class="fsq-attribution">
+    </a>
     <p><small>Copyright &copy; 2018 Anthony D'Amico</small></p>
   </footer>
 </div>
