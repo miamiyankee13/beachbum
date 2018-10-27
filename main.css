@@ -5,13 +5,17 @@
     font-family: Helvetica, Arial, sans-serif;
 }
 
-html, body {
-    height: 100%;
-    background-image: url("images/beach.jpg");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+html {
+    background: url("images/beach.jpg") no-repeat center center fixed;
+    background-size: cover;
+ 
     color: navy;
     text-shadow: 1px 1px 2px rgb(255, 245, 238);
+}
+
+html, body {
+    height: 100%;
+
 }
 
 a {
