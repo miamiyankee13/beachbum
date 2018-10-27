@@ -19,7 +19,7 @@ a {
 }
 
 h2, h3 {
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Roboto', sans-serif;
 }
 
 .container {
@@ -59,7 +59,7 @@ h2, h3 {
 .form p {
     margin: 10px;
     font-weight: bold;
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Roboto', sans-serif;
 }
 
 .search-result {
@@ -79,12 +79,20 @@ h2, h3 {
     font-size: 14px;
     background-color: #ffefd5;
     color: navy;
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 }
 
 .input {
-    font-size: 16px;
+    font-size: 20px;
     padding: 5px;
+}
+
+input::placeholder {
+    font-size: 16px;
+    text-align: center;
+    font-style: italic;
+    color: grey;
 }
 
 .photos h2, .photos h3 {

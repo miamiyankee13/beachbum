@@ -50,7 +50,6 @@ function getVenuePhotosFromApi(venueId, name, address) {     //retreive venue ph
       v: '20181018',
       client_id: 'P0MLS2UIEUF3FNS21HRUR3HYUPBVRYZ2QR2QTXH1WXR5YKE4',
       client_secret: 'RWKFIU2OXR4TD2IJGEOWXUOFTW3ZMOPFAV4HGKHHNMCIIV2Q',
-      limit: 10
     },
     dataType: 'json',
     type: 'GET'
@@ -128,11 +127,15 @@ function renderVenueWeatherData(day) {             //HTML template for each weat
   const iconCode = day.weather.icon;
   const highTemp = day.max_temp;
   const lowTemp = day.min_temp;
-  let date = day.valid_date;
+  let date = new Date(day.valid_date);             //turn date string into date object
+  date.setDate(date.getDate() + 1);                //add 1 day to date object to reflect proper date
+  const weekday = convertDateToDay(date);          //retrive weekday, month, year
+  const month = date.getMonth() + 1;
+  const dayNum = date.getDate();
  
   return `
   <div class="day">
-    <h3>${date}</h3>
+    <h3>${weekday} ${month}/${dayNum}</h3>
     <img src="images/icons/${iconCode}.png" alt="Weather icon" class="forecast-img">
     <p>${description}</p>
     <p>High temp: ${highTemp} °F</p>
@@ -215,6 +218,29 @@ function submitVenueDetailsButton() {                             //listen for u
 function showError() {                        //display error
   $('.js-message').prop('hidden', false);     //toggle hidden attribute from HTML section
   $('.js-message').html('There was an error loading the requested data')
+}
+
+function convertDateToDay(date) {           //retreive day of week string from date
+  let stringOfDay = '';
+  let numOfDay = date.getDay();
+
+  if (numOfDay === 0) {
+    stringOfDay = 'Sunday';
+  } else if (numOfDay === 1) {
+    stringOfDay = 'Monday';
+  } else if (numOfDay === 2) {
+    stringOfDay = 'Tuesday';
+  } else if (numOfDay ===3) {
+    stringOfDay = 'Wednesday';
+  } else if (numOfDay === 4) {
+    stringOfDay = 'Thursday';
+  } else if (numOfDay === 5) {
+    stringOfDay = 'Friday';
+  } else if (numOfDay === 6) {
+    stringOfDay = 'Saturday';
+  } 
+
+  return stringOfDay;
 }
 
 function handleBeachBum() {            //document ready functions
