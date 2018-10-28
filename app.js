@@ -220,22 +220,29 @@ function convertDateToDay(date) {           //retreive day of week string from d
   let stringOfDay = '';
   let numOfDay = date.getDay();
 
-  if (numOfDay === 0) {
-    stringOfDay = 'Sunday';
-  } else if (numOfDay === 1) {
-    stringOfDay = 'Monday';
-  } else if (numOfDay === 2) {
-    stringOfDay = 'Tuesday';
-  } else if (numOfDay ===3) {
-    stringOfDay = 'Wednesday';
-  } else if (numOfDay === 4) {
-    stringOfDay = 'Thursday';
-  } else if (numOfDay === 5) {
-    stringOfDay = 'Friday';
-  } else if (numOfDay === 6) {
-    stringOfDay = 'Saturday';
-  } 
-
+  switch(numOfDay) {
+    case 0:
+      stringOfDay = 'Sunday';
+      break;
+    case 1:
+      stringOfDay = 'Monday';
+      break;
+    case 2:
+      stringOfDay = 'Tuesday';
+      break;
+    case 3:
+      stringOfDay = 'Wednesday';
+      break;
+    case 4:
+      stringOfDay = 'Thursday';
+      break;
+    case 5:
+      stringOfDay = 'Friday';
+      break;
+    case 6:
+      stringOfDay = 'Saturday';
+      break;
+  }
   return stringOfDay;
 }
 
