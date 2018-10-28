@@ -15,7 +15,7 @@ HTML, CSS, JavaScript, jQuery
 
 ## APIs used
 
-[Foursquare](https://developer.foursquare.com/places-api)
+[Foursquare](https://developer.foursquare.com/places-api) <br>
 [Weatherbit](https://www.weatherbit.io/)
 
 ## Live link
