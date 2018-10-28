@@ -135,11 +135,13 @@ function renderVenueWeatherData(day) {             //HTML template for each weat
  
   return `
   <div class="day">
-    <h3>${weekday} ${month}/${dayNum}</h3>
+    <h3>${weekday}</h3>
+    <h3>${month}/${dayNum}</h3>
     <img src="images/icons/${iconCode}.png" alt="Weather icon" class="forecast-img">
     <p>${description}</p>
-    <p>High temp: ${highTemp} °F</p>
-    <p>Low temp: ${lowTemp} °F</p>
+    <br>
+    <p>High: ${highTemp} °F</p>
+    <p>Low: ${lowTemp} °F</p>
   </div>
   `
 }
@@ -170,15 +172,10 @@ function renderVenuePhotos(result) {                          //HTML template fo
 function submitVenueSearch() {                                       //listen for user submit
   $('.js-search-form').on('submit', function(event) {
     event.preventDefault();
-    const userInput = $('.js-input').val();                          //get user input
-    if (userInput.length <= 0) {
-      $('.js-message').html('Please enter a location');     //display message if input is empty
-      $('.js-message').prop('hidden', false);                        //toggle hidden attribute from HTML section
-    } else {                                        //clear value of input field
-      $('.js-message').html('Loading...please wait');
-      $('.js-message').prop('hidden', false);                        //toggle hidden attribute from HTML section
-      getVenueSearchDataFromApi(userInput);                          //run API call - pass in user input
-    }
+    const userInput = $('.js-input').val();                          //get user input                                                     
+    $('.js-message').html('Loading...please wait');
+    $('.js-message').prop('hidden', false);                        //toggle hidden attribute from HTML section
+    getVenueSearchDataFromApi(userInput);                          //run API call - pass in user input
   });
 }
 
