@@ -18,7 +18,7 @@ HTML, CSS, JavaScript, jQuery
 [Foursquare](https://developer.foursquare.com/places-api) <br>
 [Weatherbit](https://www.weatherbit.io/)
 
-## Live link
+## Live demo
 
 [BeachBum](https://miamiyankee13.github.io/beachbum/)
 
