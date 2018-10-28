@@ -1,4 +1,4 @@
-* {
+* {                                            /* custom CSS reset */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -6,13 +6,13 @@
 }
 
 html {
-    background: url("images/beach.jpg") no-repeat center center fixed;
+    background: url("images/beach.jpg") no-repeat center center fixed;   /* full page, scalable, centered background*/
     background-size: cover;
     color: navy;
     text-shadow: 1px 1px 2px rgb(255, 245, 238);
 }
 
-html, body {
+html, body {                       /* allows flex container to stretch entire page*/
     height: 100%;
 }
 
@@ -52,18 +52,18 @@ input::placeholder {
 
 .container {
     margin: 1px;
-    height: 100%;              /* allows content to stretch entire page */
-    display: flex;             /* flexbox container settings */
+    height: 100%;                                  /* allows content to stretch entire page */
+    display: flex;                                 /* flexbox container settings */
     flex-direction: column;
     align-items: center;
-    background-color: rgba(255, 245, 238, .5);
+    background-color: rgba(255, 245, 238, .5);   /* adds transparent background to make text more legible */
 }
 
 .flex-header {               /* flex item */
     flex: 1;
 }
 
-.flex-main {                /*  flex item */
+.flex-main {                /*  flex item - this section is bigger than its siblings */
     flex: 10;
     text-align: center;  
     overflow-y: scroll;     /* main can vertically scroll */
@@ -115,7 +115,7 @@ input::placeholder {
 .day {
     margin-top: 20px;
     padding: 10px;
-    background-color: rgba(255, 239, 213, .4);
+    background-color: rgba(255, 239, 213, .4);   /* adds transparent background to make text more legible */
 }
 
 .forecast-img {
@@ -143,11 +143,11 @@ input::placeholder {
 }
 
 @media (max-width: 845px) {
-    .weather {                      /* change day divs into column when screen goes below px */
+    .weather {                      /* change day divs into column when screen goes below 845px */
         flex-direction: column;
     }
 
     .day {
-        border-radius: 20px;
+        border-radius: 20px;        /* adds rounded edges to each day div when screen goes below 845px*/
     }
 }

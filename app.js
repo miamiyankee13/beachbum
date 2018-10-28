@@ -12,7 +12,7 @@ const STATE = {                              //declare object to store data retr
 let counter = 0;                                   //declare counter for rendering details buttons data-index
 
 function getVenueSearchDataFromApi(searchTerm) {       //retreive venue search data/update STATE object
-  STATE.query = searchTerm;                       //store search term in STATE object
+  STATE.query = searchTerm;                            //store search term in STATE object
   const venueSearchEndpoint = 'https://api.foursquare.com/v2/venues/search'; 
   
   const settings = {                                   //parameters for API call
@@ -66,7 +66,7 @@ function getVenuePhotosFromApi(venueId, name, address) {     //retreive venue ph
 function getVenueWeatherFromApi(lat, long) {        //reteive weather data/update STATE object
   const venueWeatherEndpoint = 'https://api.weatherbit.io/v2.0/forecast/daily';
 
-  const settings = {                                      //parameters for API call
+  const settings = {                                //parameters for API call
     url: venueWeatherEndpoint,
     data: {
       key: '0a4e350d938e4737979ee5d05f620a49',
@@ -127,6 +127,7 @@ function renderVenueWeatherData(day) {             //HTML template for each weat
   const iconCode = day.weather.icon;
   const highTemp = day.max_temp;
   const lowTemp = day.min_temp;
+
   let date = new Date(day.valid_date);             //turn date string into date object
   date.setDate(date.getDate() + 1);                //add 1 day to date object to reflect proper date
   const weekday = convertDateToDay(date);          //retrive weekday, month, year
@@ -202,13 +203,11 @@ function submitVenueDetailsButton() {                             //listen for u
     const lat = venue.location.lat;
     const long = venue.location.lng;
     
-  
-    
     $('.js-results').prop('hidden', true);                    //toggle hidden attribute from HTML sections
     $('.js-message').html('Loading...please wait');
     $('.js-message').prop('hidden', false);                   
     getVenuePhotosFromApi(venueId, name, address);            //run API call - pass in venue id, name, address
-    getVenueWeatherFromApi(lat, long);                  //run API call - pass in venue postal code
+    getVenueWeatherFromApi(lat, long);                        //run API call - pass in venue postal code
   });
 }
 
