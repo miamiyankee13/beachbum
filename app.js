@@ -9,8 +9,6 @@ const STATE = {                              //declare object to store data retr
   query: null,
 };
 
-let counter = 0;                                   //declare counter for rendering details buttons data-index
-
 function getVenueSearchDataFromApi(searchTerm) {       //retreive venue search data/update STATE object
   STATE.query = searchTerm;                            //store search term in STATE object
   const venueSearchEndpoint = 'https://api.foursquare.com/v2/venues/search'; 
@@ -37,7 +35,6 @@ function getVenueSearchDataFromApi(searchTerm) {       //retreive venue search d
     $('.js-message').prop('hidden', true);
   }).catch(showError);                            //display error if call fails
 
-  counter = 0;                                    //reset counter
   console.log(STATE);                             //log current value of STATE
 }
 
@@ -89,7 +86,7 @@ function getVenueWeatherFromApi(lat, long) {        //reteive weather data/updat
 }
 
 function displayVenueSearchData() {                //pass search results through the HTML rendering function
-    const results = STATE.venueSearch.venues.map((item) => renderVenueSearchData(item));
+    const results = STATE.venueSearch.venues.map((item, index) => renderVenueSearchData(item, index));
     $('.js-results').html(results);                //display data in HTML section
     $('.js-results').prop('hidden', false);        //toggle hidden attribute from HTML section
 }
@@ -147,15 +144,14 @@ function renderVenueWeatherData(day) {             //HTML template for each weat
   `
 }
 
-function renderVenueSearchData(result) {                         //HTML template for each venue search result
+function renderVenueSearchData(result,index) {                         //HTML template for each venue search result
   const name = result.name;
   const address = result.location.formattedAddress.join(', ');  //add spaces to address string
-  counter++;                                                    //increment counter - assign individual classes to buttons
   return `
   <div class="search-result">
     <h2>${name}</h2>
     <h3>${address}</h3>
-    <button class="js-details-btn details" data-index="${counter - 1}">View Weather Info</button>
+    <button class="js-details-btn details" data-index="${index}">View Weather Info</button>
   </div>
   <br>
   `
