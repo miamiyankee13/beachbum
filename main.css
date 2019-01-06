@@ -63,10 +63,16 @@ input::placeholder {
     flex: 1;
 }
 
+.flex-main-foot {
+    flex: 10;
+    overflow-y: scroll;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
 .flex-main {                /*  flex item - this section is bigger than its siblings */
     flex: 10;
-    text-align: center;  
-    overflow-y: scroll;     /* main can vertically scroll */
 }
 
 .flex-footer {               /* flex item */
