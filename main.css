@@ -69,6 +69,7 @@ input::placeholder {
     text-align: center;
     display: flex;
     flex-direction: column;
+    -webkit-overflow-scrolling: touch;
 }
 
 .flex-main {                /*  flex item - this section is bigger than its siblings */
